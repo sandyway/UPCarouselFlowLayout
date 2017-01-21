@@ -78,7 +78,11 @@ open class UPCarouselFlowLayout: UICollectionViewFlowLayout {
     }
     
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let superAttributes = super.layoutAttributesForElements(in: rect),
+        let kCacheDistance: CGFloat = rect.size.width
+        let rectExpand = CGRect(x: rect.origin.x - kCacheDistance,
+                                y: rect.origin.y,
+                                width: rect.size.width + (kCacheDistance * 2), height: rect.size.height)
+        guard let superAttributes = super.layoutAttributesForElements(in: rectExpand),
             let attributes = NSArray(array: superAttributes, copyItems: true) as? [UICollectionViewLayoutAttributes]
             else { return nil }
         return attributes.map({ self.transformLayoutAttributes($0) })
